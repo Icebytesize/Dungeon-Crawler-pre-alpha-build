@@ -1,0 +1,18 @@
+[
+  {
+    "Navn": "Kriger",
+    "MaxLiv": 120,
+    "Liv": 120,
+    "Styrke": 10,
+    "Forsvar": 5,
+    "SærligEvne": "Dobbelt slag"
+  },
+  {
+    "Navn": "Troldmand",
+    "Maxliv": 90,
+    "liv": 90,
+    "Styrke": 10,
+    "Forsvar": 3,
+    "SærligEvne": "Fireball"
+  }
+]
