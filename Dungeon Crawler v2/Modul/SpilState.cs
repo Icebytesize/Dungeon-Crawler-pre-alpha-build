@@ -10,5 +10,6 @@ namespace Dungeon_Crawler_v2.Modul
     {
         public static Player AktivSpiller {  get; set; }
         public static Monster AktivMonster { get; set; }
+        public static Dungeon Dungeon { get; set; }
     }
 }

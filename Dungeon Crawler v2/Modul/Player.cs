@@ -51,7 +51,7 @@ namespace Dungeon_Crawler_v2.Modul
 
         public void PlayerAttack(Monster target)
         {
-            damage = Styrke - target.Defence;
+            damage = Styrke - target.Forsvar;
             if (damage < 0) damage = 0;
 
             target.Liv -= damage;
@@ -63,11 +63,7 @@ namespace Dungeon_Crawler_v2.Modul
         public void Evne(Monster target)
         { 
         
-            if (EvneCooldown != 0)
-            {
-                Console.WriteLine($"Evne kan først bruges igen om {EvneCooldown} runder");
-                return;
-            }
+          
         
         
         

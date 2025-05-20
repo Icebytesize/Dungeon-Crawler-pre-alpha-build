@@ -11,10 +11,12 @@ namespace Dungeon_Crawler_v2.Modul
 {
     internal class Room
     {
+        Dungeon dungeon = new Dungeon();
+        Menu menu = new Menu();
         private static Random rand = new Random();
         public int x, y;
         public string RoomDescription;
-        public bool IsAccessible = true, Visited = false, IsExit = false, IsStartRoom = false;
+        public bool IsAccessible = true, Visited = false, IsExit = false, IsStartRoom = false, IsSafeHaven = false;
         public Monster MonsterInRoom = null;
 
         public HashSet<string> Doors = new HashSet<string>();
@@ -28,6 +30,8 @@ namespace Dungeon_Crawler_v2.Modul
 
         public void Enter(Player spiller = null)
         {
+        bool valgtGyldigt = false;
+            Console.Clear();
             if (!Visited)
             {
                 GenerateRandomDecription();
@@ -35,17 +39,80 @@ namespace Dungeon_Crawler_v2.Modul
                 RollForItem();
                 Visited = true;
             }
-            Console.WriteLine(RoomDescription);
 
             if (MonsterInRoom != null)
             {
-                Console.WriteLine("Et monster stirre på dig fra mørket...");
-            }
 
+                while (!valgtGyldigt)
+                {
+                    Console.Clear();
+                    UIManager.CTop();
+                    Console.WriteLine($"{SpilState.AktivMonster.Beskrivelse}");
+                    Console.WriteLine("\n1: Kæmp\n2: Stik af\n\n>");
+                    int.TryParse(Console.ReadLine(), out int input);
+                    if (input == 1) 
+                    { 
+                        valgtGyldigt = true;
+                        menu.KampMenu(); 
+                    }
+                    
+                    else if (input == 2) 
+                    { 
+                        valgtGyldigt = true;
+                        SpilState.Dungeon.CurrentRoom = SpilState.Dungeon.PreviousRoom;
+                        Console.WriteLine("Du flygter tilbage til det forrige rum..");
+                        Console.ReadKey();
+                        SpilState.Dungeon.CurrentRoom.Enter();
+                    }
+                    
+                    else 
+                    { 
+                    Console.WriteLine("Ugyldigt valgt. Prøv igen.");
+                    }
+                }
+                valgtGyldigt = false;
+
+            }
+            
+            while (!valgtGyldigt)
+            { 
+                Console.Clear();
+                UIManager.OOCTop();
+                Console.WriteLine(RoomDescription);
+                Console.Write("\nDu har følgende muligheder\n\n1: Flyt rum\n2: Rygsæk\n3: Se kort\n\n> ");
+                
+                int.TryParse(Console.ReadLine(), out int input);
+
+                if (input == 1) 
+                {
+                    Console.Clear();
+                    UIManager.OOCTop();
+                    foreach (var Door in Doors)
+                    {
+                      
+                        Console.WriteLine($"{Door}");
+                       
+                    }
+                   int.TryParse(Console.ReadLine(), out input);
+
+                    
+                }
+                else if (input == 2) 
+                { 
+                
+                }
+                
+                else if(input == 3) 
+                {
+                    dungeon.DrawMap();
+                }
+                else { Console.WriteLine("Input ikke forstået, prøv igen"); }
+            }
         }
 
         private void GenerateRandomDecription()
         {
+            if (IsSafeHaven) return;
             string[] BaseDescriptions = new string[]
                 {
                     "Et mørkt, fugtigt rum",
@@ -66,12 +133,14 @@ namespace Dungeon_Crawler_v2.Modul
         private void RollForMonster()
         {
             if (IsStartRoom) return;
+            if (IsSafeHaven) return;
             if (MonsterInRoom != null) return;
 
             int chance = rand.Next(100);
             if (chance < 25) // 25% chance
             {
-                //MonsterInRoom = Monster.RandomMonster();
+                MonsterInRoom = Monster.RandomMonster(Monster.monsterListe);
+                SpilState.AktivMonster = MonsterInRoom;
             }
         }
         private void RollForItem()

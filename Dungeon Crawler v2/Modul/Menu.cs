@@ -61,7 +61,20 @@ namespace Dungeon_Crawler_v2.Modul
 
         public void SpilMenu()
         {
-            //Kommer snart
+            if (SpilState.AktivSpiller == null) //Til hvis man på magiskvis får fravalgt sin karakter
+            {
+                Console.WriteLine("Du skal vælge en karakter, før du kan starte spillet!");
+                Console.ReadKey();
+                Console.Clear();
+                return;
+            }
+            
+            SpilState.Dungeon = new Dungeon();
+            SpilState.Dungeon.BuildStaticDungeon();
+            SpilState.Dungeon.CurrentRoom.Enter();
+
+
+
         }
         public void KarakterMenu()
         {
@@ -224,6 +237,13 @@ namespace Dungeon_Crawler_v2.Modul
             }
 
 
+        }
+        public void KampMenu()
+        {
+            while (SpilState.AktivSpiller.Liv > 0 && SpilState.AktivMonster.Liv > 0)
+            {
+
+            }
         }
         public void AfslutSpil() //Til Afslutning af program
         {

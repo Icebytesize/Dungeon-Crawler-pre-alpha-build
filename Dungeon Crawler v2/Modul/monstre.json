@@ -1,0 +1,24 @@
+[
+  {
+    "MonsterId": 0,
+    "Navn": "Grisling",
+    "Beskrivelse": "Et lavt, bredskuldret bæst med en rusten ring i trynen og mudder stænket op ad de grove børster. Dens øjne gløder af et sært rødt skær, og dens grynt lyder som kradsen mod metal. Den raser rundt som et rasende vildsvin, ustyrlig og brutal.",
+    "SærligEvne": "Svinestød",
+    "Evnebeskrivelse": "Grisling stormer frem og støder med trynen.",
+    "MaxLiv": 50,
+    "Liv": 50,
+    "Styrke": 10,
+    "Forsvar": 5
+  },
+  {
+    "MonsterId": 1,
+    "Navn": "Skovslem",
+    "Beskrivelse": "Et træligende væsen, men med vridne lemmer og barkformet kød, der bevæger sig med overraskende smidighed. Dens dybe øjne minder om knudrede trækul og dens hænder ender i lange rodlignende fingre. Den bærer skovens hævn med sig.",
+    "SærligEvne": "Rødder af stål",
+    "Evnebeskrivelse": "Grisling stormer frem og støder med trynen.",
+    "MaxLiv": 70,
+    "Liv": 70,
+    "Styrke": 5,
+    "Forsvar": 10
+  }
+]

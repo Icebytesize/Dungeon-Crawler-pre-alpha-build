@@ -58,7 +58,7 @@ namespace Dungeon_Crawler_v2.Modul
                     Console.ResetColor();
                 }
             }
-            /* AktivMonster skal lige implementeres inden det giver mening
+            // AktivMonster skal lige implementeres inden det giver mening
 
              Monster monster = SpilState.AktivMonster;
              Console.SetCursorPosition(30, 0);
@@ -84,7 +84,7 @@ namespace Dungeon_Crawler_v2.Modul
                  }
              }
              Console.WriteLine("\n");
-            */
+            
         }
     }
 }

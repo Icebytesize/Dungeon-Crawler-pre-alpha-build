@@ -13,7 +13,7 @@ namespace Dungeon_Crawler_v2.Modul
     {
 
         public Dictionary<(int x, int y), Room> Rooms = new Dictionary<(int x, int y), Room>();
-        public Room CurrentRoom;
+        public Room CurrentRoom, PreviousRoom;
 
         public void BuildStaticDungeon()
         {
@@ -26,7 +26,7 @@ namespace Dungeon_Crawler_v2.Modul
             var Room3L = new Room(2, -1);
             var Room3L2 = new Room(2, -2);
             var Room3R = new Room(2, 1);
-            var Room3R2 = new Room(2, 2);
+            var Room3R2 = new Room(2, 2) { IsSafeHaven = true, RoomDescription = "Et trykt øjeblik." };
             var Room4 = new Room(3, 0);
             var Room4L = new Room(3, -1);
             var Room4R = new Room(3, 1);
@@ -74,10 +74,10 @@ namespace Dungeon_Crawler_v2.Modul
                 int y = room.y;
 
 
-                if (Rooms.ContainsKey((x + 1, y))) room.Doors.Add("north");
-                if (Rooms.ContainsKey((x - 1, y))) room.Doors.Add("south");
-                if (Rooms.ContainsKey((x, y + 1))) room.Doors.Add("east");
-                if (Rooms.ContainsKey((x, y - 1))) room.Doors.Add("west");
+                if (Rooms.ContainsKey((x + 1, y))) room.Doors.Add("1: Nord");
+                if (Rooms.ContainsKey((x - 1, y))) room.Doors.Add("2: Syd");
+                if (Rooms.ContainsKey((x, y + 1))) room.Doors.Add("3: Øst");
+                if (Rooms.ContainsKey((x, y - 1))) room.Doors.Add("4: Vest");
             }
         }
 
@@ -97,6 +97,7 @@ namespace Dungeon_Crawler_v2.Modul
             Room NextRoom = GetRoomAt(NewX, NewY);
             if (NextRoom != null && NextRoom.IsAccessible)
             {
+                PreviousRoom = CurrentRoom;
                 CurrentRoom = NextRoom;
                 NextRoom.Enter();
             }
@@ -105,8 +106,7 @@ namespace Dungeon_Crawler_v2.Modul
 
         public void DrawMap()
         {
-            Console.Clear();
-            UIManager.OOCTop();
+            
             int MinX = Rooms.Keys.Min(k => k.x);
             int MaxX = Rooms.Keys.Max(k => k.x);
             int MinY = Rooms.Keys.Min(k => k.y);
@@ -122,7 +122,7 @@ namespace Dungeon_Crawler_v2.Modul
                     if (Rooms.TryGetValue((x, y), out Room room) && room.Visited)
                     {
                         string top = "╔";
-                        top += room.Doors.Contains("north") ? " " : "═";
+                        top += room.Doors.Contains("1:") ? " " : "═";
                         top += "╗";
                         Console.Write(top);
                     }
@@ -135,9 +135,9 @@ namespace Dungeon_Crawler_v2.Modul
                 {
                     if (Rooms.TryGetValue((x, y), out Room room) && room.Visited)
                     {
-                        string left = room.Doors.Contains("west") ? " " : "║";
+                        string left = room.Doors.Contains("4:") ? " " : "║";
                         string center = (room == CurrentRoom) ? "P" : " ";
-                        string right = room.Doors.Contains("east") ? " " : "║";
+                        string right = room.Doors.Contains("3:") ? " " : "║";
                         Console.Write(left + center + right);
                     }
                     else Console.Write("   "); // Tomt felt
@@ -150,7 +150,7 @@ namespace Dungeon_Crawler_v2.Modul
                     if (Rooms.TryGetValue((x, y), out Room room) && room.Visited)
                     {
                         string bottom = "╚";
-                        bottom += room.Doors.Contains("south") ? " " : "═";
+                        bottom += room.Doors.Contains("2:") ? " " : "═";
                         bottom += "╝";
                         Console.Write(bottom);
                     }
@@ -159,7 +159,7 @@ namespace Dungeon_Crawler_v2.Modul
                 Console.WriteLine(); // Ny linje efter række
             }
 
-            Console.WriteLine("\nTryk en tast for at fortsætte...");
+            Console.WriteLine("\nTryk en tast for at komme tilbage til menuen...");
             Console.ReadKey();
         }
     }

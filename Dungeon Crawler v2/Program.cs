@@ -19,9 +19,7 @@ namespace Dungeon_Crawler_v2
 
 
             Menu menu = new Menu();
-            //Dungeon dungeon = new Dungeon();
-            //dungeon.BuildStaticDungeon();
-
+            
             menu.HovedMenu();
         }
     }

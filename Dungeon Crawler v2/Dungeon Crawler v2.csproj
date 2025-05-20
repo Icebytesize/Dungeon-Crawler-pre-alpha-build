@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modul\Evne.cs" />
     <Compile Include="Modul\SpilData.cs" />
     <Compile Include="Modul\SpilState.cs" />
     <Compile Include="Modul\UIManager.cs" />
@@ -91,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Modul\evner.json" />
+    <None Include="Modul\monstre.json" />
     <None Include="Modul\SpilbareKlasser.json" />
     <None Include="Modul\Karaktere.json" />
     <None Include="Modul\Våben.json" />
