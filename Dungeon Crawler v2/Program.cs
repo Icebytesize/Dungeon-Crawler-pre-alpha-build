@@ -14,6 +14,10 @@ namespace Dungeon_Crawler_v2
     {
         static void Main(string[] args)
         {
+            List<Karakter> karaktere = Karakter.HentKarakterer(SpilData.StiTilKarakterer);
+            SpilState.AktivSpiller = SpilData.BootUpKarakter(karaktere[0]);
+
+
             Menu menu = new Menu();
             //Dungeon dungeon = new Dungeon();
             //dungeon.BuildStaticDungeon();

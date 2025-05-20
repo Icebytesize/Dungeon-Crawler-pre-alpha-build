@@ -10,12 +10,17 @@ namespace Dungeon_Crawler_v2.Modul
 {
     internal class Spilbareklasse
     {
-        public string KlasseNavn, SærligEvne;
-        public int MaxLiv, Liv, Styrke, Forsvar;
+        public string KlasseNavn { get; set; }
+        public string SærligEvne { get; set; }
+        public int MaxLiv { get; set; }
+        public int Liv{ get; set; }
+        public int Styrke{ get; set; }
+        public int Forsvar{ get; set; }
+        public int KlasseId { get; set; }
 
         public Spilbareklasse() { } // Påkrævet fir JSON-Deserilisering
 
-        public Spilbareklasse(string klasseNavn, string særligEvne, int maxLiv, int liv, int styrke, int forsvar)
+        public Spilbareklasse(string klasseNavn, string særligEvne, int maxLiv, int liv, int styrke, int forsvar, int klasseId)
         {
             KlasseNavn = klasseNavn;
             SærligEvne = særligEvne;
@@ -23,6 +28,7 @@ namespace Dungeon_Crawler_v2.Modul
             Liv = liv;
             Styrke = styrke;
             Forsvar = forsvar;
+            KlasseId = klasseId;
         }
 
         public void visInfo()

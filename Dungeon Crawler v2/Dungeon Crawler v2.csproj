@@ -74,6 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modul\SpilData.cs" />
+    <Compile Include="Modul\SpilState.cs" />
+    <Compile Include="Modul\UIManager.cs" />
     <Compile Include="Modul\Karakter.cs" />
     <Compile Include="Modul\Dungeon.cs" />
     <Compile Include="Modul\Item.cs" />
@@ -82,13 +85,15 @@
     <Compile Include="Modul\Player.cs" />
     <Compile Include="Modul\Room.cs" />
     <Compile Include="Modul\Spilbareklasse.cs" />
+    <Compile Include="Modul\Våben.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Modul\SpilbarKlasser.json" />
+    <None Include="Modul\SpilbareKlasser.json" />
     <None Include="Modul\Karaktere.json" />
+    <None Include="Modul\Våben.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

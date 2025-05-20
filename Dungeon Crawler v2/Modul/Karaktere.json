@@ -1,12 +1,32 @@
 [
   {
-    "Navn": "Ivan med øksen",
-    "Klasse": "Kriger",
-    "StartVåben": "Økse"
+    "Navn": "Ivan med \u00F8ksen",
+    "KlasseId": 0,
+    "StartV\u00E5benId": 2
   },
   {
-    "Navn": "Brivan Belært",
-    "Klasse": "Troldmand",
-    "StartVåben": "Stav"
+    "Navn": "Brivan Bel\u00E6rt",
+    "KlasseId": 1,
+    "StartV\u00E5benId": 1
+  },
+  {
+    "Navn": "Henning",
+    "KlasseId": 1,
+    "StartV\u00E5benId": 2
+  },
+  {
+    "Navn": "Lars Svensen",
+    "KlasseId": 0,
+    "StartV\u00E5benId": 2
+  },
+  {
+    "Navn": "Flemming Fyrt\u00F8j",
+    "KlasseId": 1,
+    "StartV\u00E5benId": 1
+  },
+  {
+    "Navn": "Jens Jern",
+    "KlasseId": 0,
+    "StartV\u00E5benId": 0
   }
 ]

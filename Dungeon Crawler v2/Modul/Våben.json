@@ -1,0 +1,24 @@
+[
+  {
+    "VåbenId":  0,
+    "VåbenNavn": "Rusten Sværd",
+    "VåbenStyrke": 3,
+    "VåbenForsvar": 1,
+    "VåbenSærligEvne": null
+  },
+  {
+    "VåbenId": 1,
+    "VåbenNavn": "Stav",
+    "VåbenStyrke": 2,
+    "VåbenForsvar": 1,
+    "VåbenSærligEvne": "Lynkilde"
+  },
+  {
+    "VåbenId": 2,
+    "VåbenNavn": "Økse",
+    "VåbenStyrke": 4,
+    "VåbenForsvar": 0,
+    "VåbenSærligEvne": null
+  }
+  
+]

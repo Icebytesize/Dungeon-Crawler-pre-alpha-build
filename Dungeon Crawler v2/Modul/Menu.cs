@@ -14,6 +14,7 @@ namespace Dungeon_Crawler_v2.Modul
         int input;
         bool GyldigtInput = false;
         List<string> HovedMenuMuligheder = new List<string>{ "Start spil", "Vælg karakter", "Afslut spil" };
+        string valgtkarakter;
         
         
 
@@ -21,9 +22,11 @@ namespace Dungeon_Crawler_v2.Modul
         {
             var actions = new List<Action> { SpilMenu, KarakterMenu, AfslutSpil }; //Ting der kan ske fra hovedmenuen
 
-            Console.WriteLine("Velkommen til det farlige fangehul");
+            
+            
             while (true) //While løkke til ikke at lukke programmet, hvis indput ikke er forstået
             {
+                UIManager.OOCTop();
                 Console.WriteLine("Du har nu følgende muligheder");
 
                 for (int i = 0; i < HovedMenuMuligheder.Count; i++)
@@ -31,7 +34,7 @@ namespace Dungeon_Crawler_v2.Modul
                     Console.WriteLine($"{i + 1}: {HovedMenuMuligheder[i]}");
                 }
 
-                Console.Write("> ");
+                Console.Write("\n> ");
                 if (int.TryParse(Console.ReadLine(), out int input)) //Tjekker om indputtet er et tal.
                 {
                     int ValgtIndex = input - 1;
@@ -62,11 +65,17 @@ namespace Dungeon_Crawler_v2.Modul
         }
         public void KarakterMenu()
         {
-            Console.Clear();
-            Console.WriteLine("Velkommen til karakter menuen, her kan du vælge hvilken karakter du vil spille som");
-
             string StiTilKaraktere = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Karaktere.json";
             List<Karakter> karaktere = Karakter.HentKarakterer(StiTilKaraktere);
+
+            string StiTilKlasser = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\SpilbareKlasser.json";
+            List<Spilbareklasse> spilbareklasser = Spilbareklasse.HentKlasser(StiTilKlasser);
+
+            string StiTilVåben = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Våben.json";
+            List<Våben> våben = Våben.HentVåben(StiTilVåben);
+
+            Console.Clear();
+            Console.WriteLine("Velkommen til karakter menuen, her kan du vælge hvilken karakter du vil spille som");
             while (true)
             {
                 Console.WriteLine("Du kan vælge mellem følgende karaktere eller oprette en ny karakter");
@@ -83,27 +92,46 @@ namespace Dungeon_Crawler_v2.Modul
                     Console.SetCursorPosition(0, i + 3);
                     Console.Write($"{i + 1}: {karaktere[i].Navn}");
                     Console.SetCursorPosition(30, i + 3);
-                    Console.Write(karaktere[i].Klasse);
+                    Console.Write(spilbareklasser[karaktere[i].KlasseId].KlasseNavn);
                     Console.SetCursorPosition(40, i + 3);
-                    Console.WriteLine(karaktere[i].StartVåben);
+                    Console.WriteLine(våben[karaktere[i].StartVåbenId].VåbenNavn);
                 }
-                Console.WriteLine("\n99: Opret ny karakter");
-                Console.Write("> ");
+                Console.WriteLine("\n99: Opret ny karakter\n100: Afslut");
+                Console.Write("\n> ");
                 if (int.TryParse(Console.ReadLine(), out int input)) //Tjekker om indputtet er et tal.
                 {
                     int ValgtIndex = input - 1;
                     if (ValgtIndex >= 0 && ValgtIndex < karaktere.Count)
                     {
+                        Karakter valgt = karaktere[ValgtIndex];
+                        Spilbareklasse klasse = spilbareklasser[valgt.KlasseId];
+                        Våben valgtVåben = våben[valgt.StartVåbenId];
+
+                        SpilState.AktivSpiller = new Player(valgt, klasse, valgtVåben);
+                        
+                        
                         Console.Clear();
-                        karaktere[ValgtIndex].VisInfo(); // Viser information om den valgt karakter
+                        SpilState.AktivSpiller.VisInfo(); // Viser information om den valgt karakter
+                        Console.WriteLine("Karakteren er valgt og gemt som aktic spiller.");
                         Console.WriteLine("\nTryk på en tast for at vende tilbage til hovedmenuen.");
                         Console.ReadKey();
+                        Console.Clear();
                         break;
 
                     }
-                    else if (ValgtIndex == 99)
+                    else if (input == 99)
                     {
                         OpretKarakterMenu();
+                        Console.Clear();
+                        break;
+                    }
+                    else if (input == 100)
+                    {
+                        Console.WriteLine("Tryk på en tast for at vende tilbage til hovedmenuen.");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+
                     }
                     else
                     {
@@ -115,8 +143,14 @@ namespace Dungeon_Crawler_v2.Modul
         }
         public void OpretKarakterMenu()
         {
-            string StiTilKlasser = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\SpilbarKlasser.json";
+            string StiTilKaraktere = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Karaktere.json";
+            List<Karakter> karaktere = Karakter.HentKarakterer(StiTilKaraktere);
+
+            string StiTilKlasser = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\SpilbareKlasser.json";
             List<Spilbareklasse> spilbareklasser = Spilbareklasse.HentKlasser(StiTilKlasser);
+
+            string StiTilVåben = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Våben.json";
+            List<Våben> våben = Våben.HentVåben(StiTilVåben);
 
             Console.Clear();
             Console.Write("Giv din karakter en navn\n> ");
@@ -124,12 +158,72 @@ namespace Dungeon_Crawler_v2.Modul
 
             Console.Clear();
             Console.WriteLine("Hvilken klasse skal din karakter have");
-            for (int i = 0; i > spilbareklasser.Count; i++)
+            for (int i = 0; i < spilbareklasser.Count; i++)
             {
+                Console.SetCursorPosition(0, i + 1);
                 Console.WriteLine($"{i + 1}: {spilbareklasser[i].KlasseNavn}");
+                Console.SetCursorPosition(15, i + 1);
+                Console.WriteLine($"Liv: {spilbareklasser[i].MaxLiv}");
+                Console.SetCursorPosition(30, i + 1);
+                Console.WriteLine($"Styrke: {spilbareklasser[i].Styrke}");
+                Console.SetCursorPosition(45, i + 1);
+                Console.WriteLine($"Forsvar: {spilbareklasser[i].Forsvar}");
             }
             Console.Write("> ");
+            int.TryParse(Console.ReadLine(), out int NyKlasseId);
+            NyKlasseId = NyKlasseId - 1;
+
+
+            Console.Clear();
+            Console.WriteLine("Hvilket våben skal din karakter starte med");
+            for (int i = 0; i < våben.Count; i++)
+            {
+                Console.SetCursorPosition(0, i + 1);
+                Console.Write($"{i + 1}: {våben[i].VåbenNavn} ");
+                Console.SetCursorPosition(20, i + 1);
+                Console.Write($"Styrke: {våben[i].VåbenStyrke}");
+                Console.SetCursorPosition(35, i + 1);
+                Console.WriteLine($"forsvar: {våben[i].VåbenForsvar}");
+            }
+            Console.Write("> ");
+            int.TryParse(Console.ReadLine(), out int NyVåbenId);
+            NyVåbenId = NyVåbenId - 1;
             
+
+            Console.Clear();
+            Console.Write($"Ønsker du at oprette denne karakter\nNavn: {NyKarakterNavn}\nKlasse: {spilbareklasser[NyKlasseId].KlasseNavn}\nVåben: {våben[NyVåbenId].VåbenNavn}\n\nLiv: {spilbareklasser[NyKlasseId].MaxLiv}\nStyrke: {spilbareklasser[NyKlasseId].Styrke + våben[NyVåbenId].VåbenStyrke}\nForsvar: {spilbareklasser[NyKlasseId].Forsvar + våben[NyVåbenId].VåbenForsvar}\nEvne: {spilbareklasser[NyKlasseId].SærligEvne}\n\n1: Opret\n2: Fortryd\n\n> ");
+            if (int.TryParse(Console.ReadLine(), out int input) && input == 1) //Tjekker om indputtet er et tal.
+            {
+                // Gemmer karakteren og opretter den i JSON filen
+                Console.Clear();
+                Karakter nyKarakter = new Karakter(NyKarakterNavn, spilbareklasser[NyKlasseId].KlasseId, våben[NyVåbenId].VåbenId);
+                karaktere.Add(nyKarakter);
+                Karakter.GemKarakterer(karaktere, StiTilKaraktere);
+
+                // Sætter nyoprette karakter som aktive karakter
+                Spilbareklasse klasse = spilbareklasser[NyKlasseId];
+                Våben valgtVåben = våben[NyVåbenId];
+                SpilState.AktivSpiller = new Player(nyKarakter, klasse, valgtVåben);
+
+
+                //besled
+                Console.WriteLine("Din karakter oprettet, gemt og valgt.\nDu vil nu blive sendt tilbage til Hovedmenuen");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else if (int.TryParse(Console.ReadLine(), out input) && input == 2) //Tjekker om indputtet er et tal.
+            {
+                Console.Clear();
+                Console.WriteLine("Du vil nu blive sendt tilbage til hovedmenuen");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                FejlBesked();
+            }
+
+
         }
         public void AfslutSpil() //Til Afslutning af program
         {
