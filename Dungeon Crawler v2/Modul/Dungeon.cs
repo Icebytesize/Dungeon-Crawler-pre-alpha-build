@@ -104,6 +104,7 @@ namespace Dungeon_Crawler_v2.Modul
             {
                 PreviousRoom = CurrentRoom;
                 CurrentRoom = NextRoom;
+                SpilState.AktivRoom = NextRoom;
                 NextRoom.Enter();
                 return true;
             }

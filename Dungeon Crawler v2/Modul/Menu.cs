@@ -17,6 +17,7 @@ namespace Dungeon_Crawler_v2.Modul
         List<string> HovedMenuMuligheder = new List<string>{ "Start spil", "Vælg karakter", "Afslut spil" };
         string valgtkarakter;
         
+        
         public string StiTilKaraktere = Path.Combine(AppContext.BaseDirectory, "Modul", "Karaktere.json");
         public string StiTilKlasser = Path.Combine(AppContext.BaseDirectory, "Modul", "SpilbareKlasser.json");
         public string StiTilVåben = Path.Combine(AppContext.BaseDirectory, "Modul", "Våben.json");
@@ -282,6 +283,19 @@ namespace Dungeon_Crawler_v2.Modul
                 }
                 SpilState.AktivMonster.MonsterAttack(SpilState.AktivSpiller);
                 Console.ReadKey();
+            }
+            if (SpilState.AktivMonster.Liv <= 0)
+            {
+                Console.Clear();
+                UIManager.CTop();
+                Console.WriteLine($"Du har besejret {SpilState.AktivMonster.Navn}, nu kan du fortsætte din færd");
+                SpilState.AktivRoom.MonsterInRoom = null; SpilState.AktivMonster = null;
+                Console.ReadKey();
+
+            }
+            else if (SpilState.AktivSpiller.Liv <= 0)
+            {
+
             }
         }
         public void AfslutSpil() //Til Afslutning af program
