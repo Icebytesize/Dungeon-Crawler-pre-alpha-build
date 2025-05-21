@@ -25,8 +25,10 @@ namespace Dungeon_Crawler_v2.Modul
             var Room2R = new Room(1, 1);
             var Room3L = new Room(2, -1);
             var Room3L2 = new Room(2, -2);
+            var Room3L3 = new Room(2, -3);
             var Room3R = new Room(2, 1);
-            var Room3R2 = new Room(2, 2) { IsSafeHaven = true, RoomDescription = "Et trykt øjeblik." };
+            var Room3R2 = new Room(2, 2);
+            var Room3R3 = new Room(2, 3) { IsSafeHaven = true, RoomDescription = "Et trykt øjeblik." };
             var Room4 = new Room(3, 0);
             var Room4L = new Room(3, -1);
             var Room4R = new Room(3, 1);
@@ -44,8 +46,10 @@ namespace Dungeon_Crawler_v2.Modul
             Rooms[(Room2R.x, Room2R.y)] = Room2R;
             Rooms[(Room3L.x, Room3L.y)] = Room3L;
             Rooms[(Room3L2.x, Room3L2.y)] = Room3L2;
+            Rooms[(Room3L3.x, Room3L3.y)] = Room3L3;
             Rooms[(Room3R.x, Room3R.y)] = Room3R;
             Rooms[(Room3R2.x, Room3R2.y)] = Room3R2;
+            Rooms[(Room3R3.x, Room3R3.y)] = Room3R3;
             Rooms[(Room4.x, Room4.y)] = Room4;
             Rooms[(Room4L.x, Room4L.y)] = Room4L;
             Rooms[(Room4R.x, Room4R.y)] = Room4R;
@@ -81,17 +85,18 @@ namespace Dungeon_Crawler_v2.Modul
             }
         }
 
-        public void MovePlayer(string direction)
+        public bool MovePlayer(int direction)
         {
             int NewX = CurrentRoom.x;
             int NewY = CurrentRoom.y;
 
-            switch (direction.ToLower())
+            switch (direction)
             {
-                case "n": NewX += 1; break;
-                case "s": NewX -= 1; break;
-                case "e": NewY += 1; break;
-                case "w": NewY -= 1; break;
+                case 1: NewX += 1; break;
+                case 2: NewX -= 1; break;
+                case 3: NewY += 1; break;
+                case 4: NewY -= 1; break;
+                default: return false;
             }
 
             Room NextRoom = GetRoomAt(NewX, NewY);
@@ -100,12 +105,16 @@ namespace Dungeon_Crawler_v2.Modul
                 PreviousRoom = CurrentRoom;
                 CurrentRoom = NextRoom;
                 NextRoom.Enter();
+                return true;
             }
             else Console.WriteLine("Du kan ikke gå den vej.");
+            Console.ReadKey();
+            return false;
         }
 
         public void DrawMap()
         {
+            Console.Clear();
             
             int MinX = Rooms.Keys.Min(k => k.x);
             int MaxX = Rooms.Keys.Max(k => k.x);
@@ -122,7 +131,7 @@ namespace Dungeon_Crawler_v2.Modul
                     if (Rooms.TryGetValue((x, y), out Room room) && room.Visited)
                     {
                         string top = "╔";
-                        top += room.Doors.Contains("1:") ? " " : "═";
+                        top += room.Doors.Contains("1: Nord") ? " " : "═";
                         top += "╗";
                         Console.Write(top);
                     }
@@ -135,9 +144,14 @@ namespace Dungeon_Crawler_v2.Modul
                 {
                     if (Rooms.TryGetValue((x, y), out Room room) && room.Visited)
                     {
-                        string left = room.Doors.Contains("4:") ? " " : "║";
-                        string center = (room == CurrentRoom) ? "P" : " ";
-                        string right = room.Doors.Contains("3:") ? " " : "║";
+                        string left = room.Doors.Contains("4: Vest") ? " " : "║";
+                        
+                        string center;
+                        if (room == CurrentRoom) center = "P";
+                        else if (room.MonsterInRoom != null) center = "M";
+                        else center = " ";
+
+                        string right = room.Doors.Contains("3: Øst") ? " " : "║";
                         Console.Write(left + center + right);
                     }
                     else Console.Write("   "); // Tomt felt
@@ -150,7 +164,7 @@ namespace Dungeon_Crawler_v2.Modul
                     if (Rooms.TryGetValue((x, y), out Room room) && room.Visited)
                     {
                         string bottom = "╚";
-                        bottom += room.Doors.Contains("2:") ? " " : "═";
+                        bottom += room.Doors.Contains("2: Syd") ? " " : "═";
                         bottom += "╝";
                         Console.Write(bottom);
                     }

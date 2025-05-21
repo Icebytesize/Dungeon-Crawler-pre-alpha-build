@@ -18,8 +18,7 @@ namespace Dungeon_Crawler_v2
             SpilState.AktivSpiller = SpilData.BootUpKarakter(karaktere[0]);
 
 
-            Menu menu = new Menu();
-            
+            Menu menu = new Menu(); 
             menu.HovedMenu();
         }
     }

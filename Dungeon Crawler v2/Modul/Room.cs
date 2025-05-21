@@ -48,7 +48,7 @@ namespace Dungeon_Crawler_v2.Modul
                     Console.Clear();
                     UIManager.CTop();
                     Console.WriteLine($"{SpilState.AktivMonster.Beskrivelse}");
-                    Console.WriteLine("\n1: Kæmp\n2: Stik af\n\n>");
+                    Console.Write("\n1: Kæmp\n2: Stik af\n\n> ");
                     int.TryParse(Console.ReadLine(), out int input);
                     if (input == 1) 
                     { 
@@ -93,18 +93,39 @@ namespace Dungeon_Crawler_v2.Modul
                         Console.WriteLine($"{Door}");
                        
                     }
-                   int.TryParse(Console.ReadLine(), out input);
+                    Console.WriteLine("\n6: Tilbage\n");
+                    Console.Write("> ");
+                    int.TryParse(Console.ReadLine(), out input);
+                    switch (input)
+                    {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            if (SpilState.Dungeon.MovePlayer(input))
+                                valgtGyldigt = true;
+                            break;
+
+                        case 6:
+                            break;
+
+                        default:
+                            Console.WriteLine("Ukendt kommando, prøv igen");
+                            break;
+                    }
+
 
                     
                 }
                 else if (input == 2) 
                 { 
+                    // Skal lige lave nogle Items inden den her kommer
                 
                 }
                 
                 else if(input == 3) 
                 {
-                    dungeon.DrawMap();
+                    SpilState.Dungeon.DrawMap();
                 }
                 else { Console.WriteLine("Input ikke forstået, prøv igen"); }
             }

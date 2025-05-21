@@ -23,6 +23,7 @@ namespace Dungeon_Crawler_v2.Modul
         public int Forsvar { get; set; }
         public int EvneCooldown = 0;
 
+        public Evne KlasseEvne { get; set; }
 
         private int damage;
 
@@ -60,10 +61,45 @@ namespace Dungeon_Crawler_v2.Modul
 
         }
 
-        public void Evne(Monster target)
-        { 
-        
-          
+        public void BrugKlasseEvne(Monster target)
+        {
+            Console.Clear();
+            UIManager.CTop();
+            
+            if (EvneCooldown == 0)
+            {
+                Console.WriteLine($"{Navn} bruger {KlasseEvne.Navn}");
+
+                damage = KlasseEvne.Styrke-target.Forsvar;
+                if (damage < 0) damage = 0;
+
+                if (KlasseEvne.EvneId == 0) //Fireball
+                {
+                    target.Liv -= damage;
+                    if (damage <= 0) Console.WriteLine($"Angrebet prelede af på {target.Navn}");
+                    else Console.WriteLine($"{target.Navn} tog {damage} af din {KlasseEvne.Navn}");
+                }
+
+                else if (KlasseEvne.EvneId == 1) //Dobbelt Slag
+                {
+                    PlayerAttack(target);
+                    PlayerAttack(target);
+                }
+
+                else if (KlasseEvne.EvneId == 2) //første indtryk
+                {
+                    if (target.MaxLiv == target.Liv)
+                    {
+                        damage = 40 - target.Forsvar;
+                        if (damage < 0) damage = 0;
+                        target.Liv -= damage;
+
+                        if (damage <= 0) Console.WriteLine($"På trods af overraskelsen, prælede dit angreb af op {target.Navn}");
+                        else Console.WriteLine($"Du gør noget af et første indtryk på {target.Navn} og de tager {damage} skade");
+                    }
+                }
+                else { Console.WriteLine("Du har ingen særlig evne");  }
+            }
         
         
         

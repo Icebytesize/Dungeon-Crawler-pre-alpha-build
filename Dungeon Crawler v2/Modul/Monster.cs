@@ -48,6 +48,16 @@ namespace Dungeon_Crawler_v2.Modul
             Console.Write($"Navn: {Navn}, Liv: {MaxLiv}, Styrke: {Styrke} Forsvar: {Forsvar}, Særlig Evne {SærligEvne}.");
         }
 
+        public void MonsterAttack(Player target)
+        {
+            damage = Styrke - target.Forsvar;
+            if ( damage < 0 ) damage = 0;
+
+            target.Liv -= damage;
+            if (damage <= 0) Console.WriteLine($"{Navn}'s Angreb prelede af på dig");
+            else Console.WriteLine($"Du tog {damage} skade af {Navn}'s angreb");
+        }
+
         public static List<Monster> HentMonstre(string sti)
         {
             if (!File.Exists(sti)) return new List<Monster>();

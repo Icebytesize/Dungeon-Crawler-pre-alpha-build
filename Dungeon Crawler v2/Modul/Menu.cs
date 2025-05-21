@@ -242,7 +242,43 @@ namespace Dungeon_Crawler_v2.Modul
         {
             while (SpilState.AktivSpiller.Liv > 0 && SpilState.AktivMonster.Liv > 0)
             {
+                GyldigtInput = false;
+                Console.Clear();
 
+                while (!GyldigtInput)
+                {
+                    UIManager.CTop();
+                    Console.Write("\n1: Angrib\n2: Item\n\n> ");
+                    int.TryParse(Console.ReadLine(), out input);
+                    if (input == 1) 
+                    {
+                        while (!GyldigtInput)
+                        {
+                            Console.Clear();
+                            UIManager.CTop();
+                            Console.Write($"\n1: Standard Angreb\n2: {SpilState.AktivSpiller.SærligEvne}\n\n> ");
+
+                            int.TryParse(Console.ReadLine(), out input);
+
+                            if (input == 1)
+                            { SpilState.AktivSpiller.PlayerAttack(SpilState.AktivMonster); GyldigtInput = true; }
+
+                            else if (input == 2)
+                            { SpilState.AktivSpiller.BrugEvne(SpilState.AktivMonster); GyldigtInput = true; }
+                        }
+                    }
+
+                    else if (input == 2) 
+                    { 
+                        // Items er ikk implemteret endnu
+                        Console.WriteLine("Items er ikke implemteret endnu, vælg noget andet");
+                    }
+                   
+                    else { Console.WriteLine("Input ikke forstået prøv igen"); Console.ReadKey(); } 
+
+                }
+                SpilState.AktivMonster.MonsterAttack(SpilState.AktivSpiller);
+                Console.ReadKey();
             }
         }
         public void AfslutSpil() //Til Afslutning af program
