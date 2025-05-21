@@ -12,6 +12,10 @@ namespace Dungeon_Crawler_v2.Modul
 {
     public class Karakter
     {
+        public string StiTilKaraktere = Path.Combine(AppContext.BaseDirectory, "Modul", "Karaktere.json");
+        public string StiTilKlasser = Path.Combine(AppContext.BaseDirectory, "Modul", "SpilbareKlasser.json");
+        public string StiTilVåben = Path.Combine(AppContext.BaseDirectory, "Modul", "Våben.json");
+
 
         public string Navn { get; set; }
         public int KlasseId { get; set; }
@@ -30,10 +34,8 @@ namespace Dungeon_Crawler_v2.Modul
 
         public void VisInfo()
         {
-            string StiTilKlasser = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\SpilbareKlasser.json";
             List<Spilbareklasse> spilbareklasser = Spilbareklasse.HentKlasser(StiTilKlasser);
 
-            string StiTilVåben = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Våben.json";
             List<Våben> våben = Våben.HentVåben(StiTilVåben);
 
             Console.WriteLine($"Navn: {Navn}, Klasse: {spilbareklasser[KlasseId].KlasseNavn}, Våben: {våben[StartVåbenId].VåbenNavn}");

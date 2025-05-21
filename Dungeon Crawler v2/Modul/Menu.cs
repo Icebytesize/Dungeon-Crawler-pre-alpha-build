@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Dungeon_Crawler_v2.Modul;
+using System.IO;
 
 namespace Dungeon_Crawler_v2.Modul
 {
@@ -16,7 +17,12 @@ namespace Dungeon_Crawler_v2.Modul
         List<string> HovedMenuMuligheder = new List<string>{ "Start spil", "Vælg karakter", "Afslut spil" };
         string valgtkarakter;
         
+        public string StiTilKaraktere = Path.Combine(AppContext.BaseDirectory, "Modul", "Karaktere.json");
+        public string StiTilKlasser = Path.Combine(AppContext.BaseDirectory, "Modul", "SpilbareKlasser.json");
+        public string StiTilVåben = Path.Combine(AppContext.BaseDirectory, "Modul", "Våben.json");
+        public string StiTilEvner = Path.Combine(AppContext.BaseDirectory, "Modul", "evner.json");
         
+       
 
         public void HovedMenu() //Hovedmenu funktionellitete
         {
@@ -78,14 +84,13 @@ namespace Dungeon_Crawler_v2.Modul
         }
         public void KarakterMenu()
         {
-            string StiTilKaraktere = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Karaktere.json";
             List<Karakter> karaktere = Karakter.HentKarakterer(StiTilKaraktere);
 
-            string StiTilKlasser = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\SpilbareKlasser.json";
             List<Spilbareklasse> spilbareklasser = Spilbareklasse.HentKlasser(StiTilKlasser);
 
-            string StiTilVåben = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Våben.json";
             List<Våben> våben = Våben.HentVåben(StiTilVåben);
+
+            List<Evne> evner = Evne.HentEvner(StiTilEvner);
 
             Console.Clear();
             Console.WriteLine("Velkommen til karakter menuen, her kan du vælge hvilken karakter du vil spille som");
@@ -120,7 +125,7 @@ namespace Dungeon_Crawler_v2.Modul
                         Spilbareklasse klasse = spilbareklasser[valgt.KlasseId];
                         Våben valgtVåben = våben[valgt.StartVåbenId];
 
-                        SpilState.AktivSpiller = new Player(valgt, klasse, valgtVåben);
+                        SpilState.AktivSpiller = SpilData.BootUpKarakter(valgt);
                         
                         
                         Console.Clear();
@@ -153,16 +158,14 @@ namespace Dungeon_Crawler_v2.Modul
                 }
 
             }
+
         }
         public void OpretKarakterMenu()
         {
-            string StiTilKaraktere = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Karaktere.json";
             List<Karakter> karaktere = Karakter.HentKarakterer(StiTilKaraktere);
 
-            string StiTilKlasser = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\SpilbareKlasser.json";
             List<Spilbareklasse> spilbareklasser = Spilbareklasse.HentKlasser(StiTilKlasser);
 
-            string StiTilVåben = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\Våben.json";
             List<Våben> våben = Våben.HentVåben(StiTilVåben);
 
             Console.Clear();
@@ -216,7 +219,7 @@ namespace Dungeon_Crawler_v2.Modul
                 // Sætter nyoprette karakter som aktive karakter
                 Spilbareklasse klasse = spilbareklasser[NyKlasseId];
                 Våben valgtVåben = våben[NyVåbenId];
-                SpilState.AktivSpiller = new Player(nyKarakter, klasse, valgtVåben);
+                SpilState.AktivSpiller = SpilData.BootUpKarakter(nyKarakter);
 
 
                 //besled
@@ -256,7 +259,7 @@ namespace Dungeon_Crawler_v2.Modul
                         {
                             Console.Clear();
                             UIManager.CTop();
-                            Console.Write($"\n1: Standard Angreb\n2: {SpilState.AktivSpiller.SærligEvne}\n\n> ");
+                            Console.Write($"\n1: Standard Angreb\n2: {SpilState.AktivSpiller.SærligEvne} ({(SpilState.AktivSpiller.EvneCooldown == 0 ? "Brugbar" : "Ikke brugbar")})\n\n> ");
 
                             int.TryParse(Console.ReadLine(), out input);
 
@@ -264,7 +267,7 @@ namespace Dungeon_Crawler_v2.Modul
                             { SpilState.AktivSpiller.PlayerAttack(SpilState.AktivMonster); GyldigtInput = true; }
 
                             else if (input == 2)
-                            { SpilState.AktivSpiller.BrugEvne(SpilState.AktivMonster); GyldigtInput = true; }
+                            { SpilState.AktivSpiller.BrugKlasseEvne(SpilState.AktivMonster); GyldigtInput = true; }
                         }
                     }
 

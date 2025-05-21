@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Dungeon_Crawler_v2.Modul
 {
@@ -15,5 +17,11 @@ namespace Dungeon_Crawler_v2.Modul
 
         public Evne() { } //til Json desentralisering
 
+        public static List<Evne> HentEvner(string sti)
+        {
+            if (!File.Exists(sti)) return new List<Evne>();
+            string json = File.ReadAllText(sti);
+            return JsonSerializer.Deserialize<List<Evne>>(json);
+        }
     }
 }

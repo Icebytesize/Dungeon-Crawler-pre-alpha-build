@@ -41,7 +41,7 @@ namespace Dungeon_Crawler_v2.Modul
             Forsvar = klasse.Forsvar + våben.VåbenForsvar;
             SærligEvne = klasse.SærligEvne;
 
-
+            KlasseEvne = klasse.KlasseEvneObjekt;
         }
 
         public void VisInfo()
@@ -58,6 +58,8 @@ namespace Dungeon_Crawler_v2.Modul
             target.Liv -= damage;
             if (damage <= 0) Console.WriteLine($"Angrebet prelede af på {target.Navn}");
             else Console.WriteLine($"{target.Navn} tog {damage} af dit angreb");
+
+            if (EvneCooldown > 0) EvneCooldown--;
 
         }
 
@@ -78,12 +80,14 @@ namespace Dungeon_Crawler_v2.Modul
                     target.Liv -= damage;
                     if (damage <= 0) Console.WriteLine($"Angrebet prelede af på {target.Navn}");
                     else Console.WriteLine($"{target.Navn} tog {damage} af din {KlasseEvne.Navn}");
+                    EvneCooldown = 4;
                 }
 
                 else if (KlasseEvne.EvneId == 1) //Dobbelt Slag
                 {
                     PlayerAttack(target);
                     PlayerAttack(target);
+                    EvneCooldown = 3;
                 }
 
                 else if (KlasseEvne.EvneId == 2) //første indtryk

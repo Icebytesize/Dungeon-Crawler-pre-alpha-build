@@ -12,7 +12,9 @@ namespace Dungeon_Crawler_v2.Modul
 {
     internal class Monster
     {
-        public const string StiTilMonstre = "C:\\Users\\maul\\source\\repos\\Dungeon Crawler v2\\Dungeon Crawler v2\\Modul\\monstre.json";
+        
+        public static readonly string StiTilMonstre = Path.Combine(AppContext.BaseDirectory, "Modul", "monstre.json");
+
         public string Navn { get; set; }
         public string Beskrivelse { get; set; }
         public string SærligEvne { get; set; }

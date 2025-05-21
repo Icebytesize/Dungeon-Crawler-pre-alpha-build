@@ -10,13 +10,14 @@ namespace Dungeon_Crawler_v2.Modul
 {
     internal class Spilbareklasse
     {
+        public int KlasseId { get; set; }
         public string KlasseNavn { get; set; }
-        public string SærligEvne { get; set; }
         public int MaxLiv { get; set; }
         public int Liv{ get; set; }
         public int Styrke{ get; set; }
         public int Forsvar{ get; set; }
-        public int KlasseId { get; set; }
+        public string SærligEvne { get; set; }
+        public Evne KlasseEvneObjekt{ get; set; }
 
         public Spilbareklasse() { } // Påkrævet fir JSON-Deserilisering
 
