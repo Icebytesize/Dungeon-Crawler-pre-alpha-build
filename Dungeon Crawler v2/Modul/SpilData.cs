@@ -15,6 +15,7 @@ namespace Dungeon_Crawler_v2.Modul
         public static string StiTilKlasser = Path.Combine(AppContext.BaseDirectory, "Modul", "SpilbareKlasser.json");
         public static string StiTilVåben = Path.Combine(AppContext.BaseDirectory, "Modul", "Våben.json");
         public static string StiTilEvner = Path.Combine(AppContext.BaseDirectory, "Modul", "evner.json");
+        public static string StiTilItems = Path.Combine(AppContext.BaseDirectory, "Modul", "Items.json");
 
         public static Player BootUpKarakter(Karakter karakter)
         {

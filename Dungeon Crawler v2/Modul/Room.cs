@@ -17,7 +17,8 @@ namespace Dungeon_Crawler_v2.Modul
         public int x, y;
         public string RoomDescription;
         public bool IsAccessible = true, Visited = false, IsExit = false, IsStartRoom = false, IsSafeHaven = false;
-        public Monster MonsterInRoom = null;
+        public Monster MonsterInRoom = null; 
+        public Item ItemInRoom1 = null, ItemInRoom2 = null;
 
         public HashSet<string> Doors = new HashSet<string>();
 
@@ -60,7 +61,7 @@ namespace Dungeon_Crawler_v2.Modul
                     { 
                         valgtGyldigt = true;
                         SpilState.Dungeon.CurrentRoom = SpilState.Dungeon.PreviousRoom;
-                        Console.WriteLine("Du flygter tilbage til det forrige rum..");
+                        Console.Write("Du flygter tilbage til det forrige rum..");
                         Console.ReadKey();
                         SpilState.Dungeon.CurrentRoom.Enter();
                     }
@@ -79,7 +80,30 @@ namespace Dungeon_Crawler_v2.Modul
                 Console.Clear();
                 UIManager.OOCTop();
                 Console.WriteLine(RoomDescription);
-                Console.Write("\nDu har følgende muligheder\n\n1: Flyt rum\n2: Rygsæk\n3: Se kort\n\n> ");
+                if (IsExit) { menu.EndState(); }
+                if (ItemInRoom1 != null || ItemInRoom2 != null)
+                {
+                    Console.Write($"\nDu finder og samler ");
+
+                    if (ItemInRoom1 != null)
+                    { Console.Write($"en {ItemInRoom1.Navn}"); SpilState.AktivSpiller.TilføjItem(ItemInRoom1);  }
+
+                    if (ItemInRoom1 != null && ItemInRoom2 != null)
+                    {
+                        if (ItemInRoom1.ItemId != ItemInRoom2.ItemId)
+                        { Console.Write(" & en " + ItemInRoom2.Navn); SpilState.AktivSpiller.TilføjItem(ItemInRoom2); }
+                        else
+                        { Console.Write(" & en til"); }
+                    }
+                    else if (ItemInRoom2 != null)
+                    {
+                        Console.Write($"en {ItemInRoom2.Navn}"); SpilState.AktivSpiller.TilføjItem(ItemInRoom2); 
+                    }
+                    Console.WriteLine(" op");
+                    ItemInRoom1 = null; ItemInRoom2 = null;
+                }
+
+                    Console.Write("\nDu har følgende muligheder\n\n1: Flyt rum\n2: Rygsæk\n3: Se kort\n\n> ");
                 
                 int.TryParse(Console.ReadLine(), out int input);
 
@@ -118,9 +142,12 @@ namespace Dungeon_Crawler_v2.Modul
                     
                 }
                 else if (input == 2) 
-                { 
-                    // Skal lige lave nogle Items inden den her kommer
-                
+                {
+                    Console.Clear();
+                    UIManager.OOCTop();
+                    SpilState.AktivSpiller.BrugItem();
+
+                    Console.ReadKey();
                 }
                 
                 else if(input == 3) 
@@ -134,6 +161,7 @@ namespace Dungeon_Crawler_v2.Modul
         private void GenerateRandomDecription()
         {
             if (IsSafeHaven) return;
+            if (IsExit) return;
             string[] BaseDescriptions = new string[]
                 {
                     "Et mørkt, fugtigt rum",
@@ -155,6 +183,7 @@ namespace Dungeon_Crawler_v2.Modul
         {
             if (IsStartRoom) return;
             if (IsSafeHaven) return;
+            if (IsExit) return;
             if (MonsterInRoom != null) return;
 
             int chance = rand.Next(100);
@@ -167,7 +196,21 @@ namespace Dungeon_Crawler_v2.Modul
         private void RollForItem()
         {
             if (IsStartRoom) return;
-            //more to come
+            if (IsSafeHaven) return;
+            if (IsExit) return;
+
+            int chance = rand.Next(100);
+            if (chance < 25)
+            {
+                ItemInRoom1 = Item.RandomItem(Item.items);
+                
+            }
+            chance = rand.Next(100);
+            {
+                ItemInRoom2 = Item.RandomItem(Item.items);
+                
+            }
+
         }
     }
 }

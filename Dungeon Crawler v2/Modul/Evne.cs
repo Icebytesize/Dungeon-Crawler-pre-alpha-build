@@ -17,6 +17,8 @@ namespace Dungeon_Crawler_v2.Modul
 
         public Evne() { } //til Json desentralisering
 
+        
+
         public static List<Evne> HentEvner(string sti)
         {
             if (!File.Exists(sti)) return new List<Evne>();

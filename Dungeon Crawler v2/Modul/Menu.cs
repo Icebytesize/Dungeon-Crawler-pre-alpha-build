@@ -273,9 +273,11 @@ namespace Dungeon_Crawler_v2.Modul
                     }
 
                     else if (input == 2) 
-                    { 
-                        // Items er ikk implemteret endnu
-                        Console.WriteLine("Items er ikke implemteret endnu, vælg noget andet");
+                    {
+                        Console.Clear() ;
+                        UIManager.CTop();
+                        SpilState.AktivSpiller.BrugItem();
+                        GyldigtInput = true;
                     }
                    
                     else { Console.WriteLine("Input ikke forstået prøv igen"); Console.ReadKey(); } 
@@ -289,13 +291,17 @@ namespace Dungeon_Crawler_v2.Modul
                 Console.Clear();
                 UIManager.CTop();
                 Console.WriteLine($"Du har besejret {SpilState.AktivMonster.Navn}, nu kan du fortsætte din færd");
+                SpilState.AktivMonster.Liv = SpilState.AktivMonster.MaxLiv;
                 SpilState.AktivRoom.MonsterInRoom = null; SpilState.AktivMonster = null;
                 Console.ReadKey();
 
             }
             else if (SpilState.AktivSpiller.Liv <= 0)
             {
-
+                Console.Clear();
+                Console.WriteLine("Du er død, spillet vil nu Lukke");
+                Console.ReadKey();
+                Environment.Exit(0);
             }
         }
         public void AfslutSpil() //Til Afslutning af program
@@ -310,6 +316,12 @@ namespace Dungeon_Crawler_v2.Modul
             Console.WriteLine("Input ikke forstået, tryk på enter for at blive sendt tilbage til menuen");
             Console.ReadKey();
             Console.Clear();
+        }
+        public void EndState()
+        { Console.Clear();
+            Console.WriteLine("Du har overlevede dine strabasser, godt klaret\nNu vil spillet afslutte");
+            Console.ReadKey();
+            Environment.Exit(0);
         }
 
     }

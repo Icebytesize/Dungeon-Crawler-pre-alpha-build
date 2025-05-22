@@ -95,6 +95,9 @@
     <None Include="Modul\evner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Modul\Items.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Modul\monstre.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

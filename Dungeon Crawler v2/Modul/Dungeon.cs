@@ -33,7 +33,7 @@ namespace Dungeon_Crawler_v2.Modul
             var Room4L = new Room(3, -1);
             var Room4R = new Room(3, 1);
             var Room5 = new Room(4, 0);
-            var SlutRoom = new Room(5, 0) { IsExit = true };
+            var SlutRoom = new Room(5, 0) { IsExit = true, RoomDescription = "Du har endelig fundet en vej ud." };
 
 
 
@@ -174,7 +174,7 @@ namespace Dungeon_Crawler_v2.Modul
                 Console.WriteLine(); // Ny linje efter række
             }
 
-            Console.WriteLine("\nTryk en tast for at komme tilbage til menuen...");
+            Console.Write("\nTryk en tast for at komme tilbage til menuen...");
             Console.ReadKey();
         }
     }
