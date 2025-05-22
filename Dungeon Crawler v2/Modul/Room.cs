@@ -93,7 +93,7 @@ namespace Dungeon_Crawler_v2.Modul
                         if (ItemInRoom1.ItemId != ItemInRoom2.ItemId)
                         { Console.Write(" & en " + ItemInRoom2.Navn); SpilState.AktivSpiller.TilføjItem(ItemInRoom2); }
                         else
-                        { Console.Write(" & en til"); }
+                        { Console.Write(" & en til"); SpilState.AktivSpiller.TilføjItem(ItemInRoom2); }
                     }
                     else if (ItemInRoom2 != null)
                     {
