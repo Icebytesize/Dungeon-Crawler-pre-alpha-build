@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modul\Animationer.cs" />
     <Compile Include="Modul\Evne.cs" />
     <Compile Include="Modul\SpilData.cs" />
     <Compile Include="Modul\SpilState.cs" />

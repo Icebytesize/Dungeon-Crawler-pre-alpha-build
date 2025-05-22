@@ -11,7 +11,7 @@ namespace Dungeon_Crawler_v2.Modul
 {
     internal class Player
     {
-
+        Animationer animationer = new Animationer();
         public string Navn { get; set; }
         public string Klasse { get; set; }
         public string Våben { get; set; }
@@ -119,13 +119,21 @@ namespace Dungeon_Crawler_v2.Modul
             {
                 case "helbredende drik":
                     Liv += item.Styrke;
-                    Console.WriteLine($"Du blev helbredt med {item.Styrke} liv!");
+                    if (Liv > MaxLiv) Liv = MaxLiv;
+                    Console.Clear();
+                    animationer.HelbredeneDrikAnimation();
+                    if (SpilState.AktivMonster != null) UIManager.CTop();
+                    else UIManager.OOCTop();
+
+                        Console.WriteLine($"Du blev helbredt med {item.Styrke} liv!");
                     break;
 
                 case "bombe":
                     if (SpilState.AktivMonster != null)
                     {
                         SpilState.AktivMonster.Liv -= item.Styrke;
+                        animationer.BombeAnimation();
+                        UIManager.CTop();
                         Console.WriteLine($"Du kastede en bombe og gjorde {item.Styrke} skade på {SpilState.AktivMonster.Navn}!");
                     }
                     else
@@ -154,6 +162,9 @@ namespace Dungeon_Crawler_v2.Modul
                 if (KlasseEvne.EvneId == 0) //Fireball
                 {
                     target.Liv -= damage;
+                    Console.Clear();
+                    animationer.FireballAnimation();
+                    UIManager.CTop();
                     if (target.Liv < 0) target.Liv = 0;
                     if (damage <= 0) Console.WriteLine($"Angrebet prelede af på {target.Navn}");
                     else Console.WriteLine($"{target.Navn} tog {damage} af din {KlasseEvne.Navn}");
@@ -162,6 +173,8 @@ namespace Dungeon_Crawler_v2.Modul
 
                 else if (KlasseEvne.EvneId == 1) //Dobbelt Slag
                 {
+                    animationer.DobbeltSlagAnimation();
+                    UIManager.CTop();
                     PlayerAttack(target);
                     PlayerAttack(target);
                     EvneCooldown = 3;
