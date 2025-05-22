@@ -12,24 +12,33 @@ namespace Dungeon_Crawler_v2.Modul
 {
     public class Karakter
     {
+        public string StiTilKaraktere = Path.Combine(AppContext.BaseDirectory, "Modul", "Karaktere.json");
+        public string StiTilKlasser = Path.Combine(AppContext.BaseDirectory, "Modul", "SpilbareKlasser.json");
+        public string StiTilVåben = Path.Combine(AppContext.BaseDirectory, "Modul", "Våben.json");
+
+
         public string Navn { get; set; }
-        public string Klasse { get; set; }
-        public string StartVåben { get; set; }
+        public int KlasseId { get; set; }
+        public int StartVåbenId { get; set; }
         
 
 
         public Karakter() {} // Påkrævet fir JSON-Deserilisering
 
-        public Karakter(string navn, string klasseNavn, string startvåben)
+        public Karakter(string navn, int klasseId, int startvåbenId)
         {
             Navn = navn;
-            Klasse = klasseNavn;
-            StartVåben = startvåben;
+            KlasseId = klasseId;
+            StartVåbenId = startvåbenId;
         }
 
         public void VisInfo()
         {
-            Console.WriteLine($"Navn: {Navn}, Klasse: {Klasse}, Våben: {StartVåben}");
+            List<Spilbareklasse> spilbareklasser = Spilbareklasse.HentKlasser(StiTilKlasser);
+
+            List<Våben> våben = Våben.HentVåben(StiTilVåben);
+
+            Console.WriteLine($"Navn: {Navn}, Klasse: {spilbareklasser[KlasseId].KlasseNavn}, Våben: {våben[StartVåbenId].VåbenNavn}");
             
         }
     

@@ -1,0 +1,16 @@
+[
+  {
+    "ItemId": 0,
+    "Navn": "Helbredende drik",
+    "Beskrivelse": "Denne drik forbedre helbrede på den der indtager drikken markant",
+    "Styrke": 40,
+    "Antal": 0
+  },
+  {
+    "ItemId": 1,
+    "Navn": "Bombe",
+    "Beskrivelse": "En bombe der kan kastes på modstandere for at skade dem voldsomt",
+    "Styrke": 60,
+    "Antal":  0
+  }
+]

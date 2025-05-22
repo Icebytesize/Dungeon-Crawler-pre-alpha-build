@@ -1,6 +1,7 @@
 [
   {
-    "Navn": "Kriger",
+    "KlasseId":  0,
+    "KlasseNavn": "Kriger",
     "MaxLiv": 120,
     "Liv": 120,
     "Styrke": 10,
@@ -8,9 +9,10 @@
     "SærligEvne": "Dobbelt slag"
   },
   {
-    "Navn": "Troldmand",
-    "Maxliv": 90,
-    "liv": 90,
+    "KlasseId": 1,
+    "KlasseNavn": "Troldmand",
+    "MaxLiv": 90,
+    "Liv": 90,
     "Styrke": 10,
     "Forsvar": 3,
     "SærligEvne": "Fireball"

@@ -1,0 +1,20 @@
+[
+  {
+    "EvneId":  0,
+    "Navn": "Fireball",
+    "Beskrivelse": "Kaster en ildkugle mod fjenden.",
+    "Styrke": 25
+  },
+  {
+    "EvneId": 1,
+    "Navn": "Dobbelt slag",
+    "Beskrivelse": "Angriber to gange hurtigt.",
+    "Styrke": 0
+  },
+  {
+    "EvneId": 2,
+    "Navn": "Første indtryk",
+    "Beskrivelse": "Gør ekstra skade hvis fjenden er uberørt.",
+    "Styrke": 4
+  }
+]
