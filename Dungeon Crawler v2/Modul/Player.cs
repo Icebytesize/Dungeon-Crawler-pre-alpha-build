@@ -151,12 +151,12 @@ namespace Dungeon_Crawler_v2.Modul
         {
             Console.Clear();
             UIManager.CTop();
-            
+
             if (EvneCooldown == 0)
             {
                 Console.WriteLine($"{Navn} bruger {KlasseEvne.Navn}");
 
-                damage = KlasseEvne.Styrke-target.Forsvar;
+                damage = KlasseEvne.Styrke - target.Forsvar;
                 if (damage < 0) damage = 0;
 
                 if (KlasseEvne.EvneId == 0) //Fireball
@@ -193,9 +193,11 @@ namespace Dungeon_Crawler_v2.Modul
                         else Console.WriteLine($"Du gør noget af et første indtryk på {target.Navn} og de tager {damage} skade");
                     }
                 }
-                else { Console.WriteLine("Du har ingen særlig evne");  }
+                else { Console.WriteLine("Du har ingen særlig evne"); }
             }
-                    
+
+            else
+            { Console.WriteLine("Din evne er ikke klar"); }
         }
 
     }

@@ -43,7 +43,7 @@ namespace Dungeon_Crawler_v2.Modul
 
             if (MonsterInRoom != null)
             {
-
+              1
                 while (!valgtGyldigt)
                 {
                     Console.Clear();
